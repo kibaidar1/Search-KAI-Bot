@@ -231,10 +231,7 @@ def text_message(update, context):
 
 def main():
     token = "797118751:AAGAmqwB5uhCLyLcWUd0mkvMNogMsODl0N0"
-    request_kwargs = {
-        'proxy_url': 'socks5://111.223.75.178:8888'
-    }
-    updater = Updater(token=token, request_kwargs=request_kwargs, use_context=True)
+    updater = Updater(token=token, use_context=True)
     dispatcher = updater.dispatcher
     job = updater.job_queue
     print("Bot is running")
