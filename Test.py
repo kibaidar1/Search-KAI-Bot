@@ -17,7 +17,7 @@ faculties = ['1 - Институт авиации, наземного транс
              '5 - Институт радиоэлектроники и телекоммуникаций',
              '9 - Институт экономики, управления и социальных технологий']
 
-print(Manager_Database.count())
+# print(Manager_Database.count())
 
 # def finder(update, context):
 #     print('finder')
