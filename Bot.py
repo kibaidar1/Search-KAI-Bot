@@ -1,6 +1,8 @@
 
 from telegram import ChatAction, ReplyKeyboardMarkup, ReplyKeyboardRemove
 from telegram.ext import Updater, CommandHandler, MessageHandler, Filters, ConversationHandler
+from boto.s3.connection import S3Connection
+import os
 import apiai
 import datetime
 import json
@@ -8,11 +10,17 @@ import logging
 import Manager_Database
 import Parser_Students
 
+# Ключи
+bot_token = S3Connection(os.environ['BOT_TOKEN'])
+ai_token = S3Connection(os.environ['AI_TOKEN'])
+
+# Настройка логи
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
                     level=logging.INFO)
 logger = logging.getLogger(__name__)
 
-COURSE, FAC, GROUP, ANSWER = range(4)  # Состояния дял ConversationHandler
+# Состояния дял ConversationHandler
+COURSE, FAC, GROUP, ANSWER = range(4)
 
 #  списки для команды LISTS
 group = [0, 0, 0, 0]
@@ -225,7 +233,7 @@ def cancel(update, context):
 
 def text_message(update, context):
     # Ответ на обычные сообщения
-    request = apiai.ApiAI('ff6294d116844a5d8921d9c29b508dce').text_request()  # Токен API Dialogflow
+    request = apiai.ApiAI(ai_token).text_request()  # Токен API Dialogflow
     request.lang = 'ru'  # Язык запроса
     request.session_id = 'Botegram'  # ID Сессии диалога
     request.query = update.message.text  # Запрос к ИИ с сообщением юзера
@@ -242,8 +250,7 @@ def text_message(update, context):
 
 
 def main():
-    token = "797118751:AAGAmqwB5uhCLyLcWUd0mkvMNogMsODl0N0"
-    updater = Updater(token=token, use_context=True)
+    updater = Updater(token=bot_token, use_context=True)
     dispatcher = updater.dispatcher
     job = updater.job_queue
     print("Bot is running")
