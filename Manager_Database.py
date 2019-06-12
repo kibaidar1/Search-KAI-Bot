@@ -12,11 +12,13 @@ cursor.execute("CREATE TABLE IF NOT EXISTS students"
 
 
 def add_to_db(student_lst):
+    # Добавление в БД
     cursor.executemany("INSERT INTO students VALUES (?,?,?,?)", student_lst)
     connect.commit()
 
 
 def update_db(student_lst):
+    # Полное обновление БД
     cursor.execute("DELETE FROM students")
     add_to_db(student_lst)
 
@@ -47,6 +49,7 @@ def get_student(name):
 
 
 def get_courses(fac):
+    # Возвращает список курсов факультета fac
     req = "SELECT course FROM students WHERE fac=?"
     cursor.execute(req, [fac])
     answer = cursor.fetchall()
@@ -54,6 +57,7 @@ def get_courses(fac):
 
 
 def get_groups(fac, course):
+    # Возвращает список групп факультета fac и курса course
     req = "SELECT class FROM students WHERE fac=? AND course=?"
     cursor.execute(req, [fac, course])
     answer = cursor.fetchall()
@@ -61,6 +65,7 @@ def get_groups(fac, course):
 
 
 def get_group_list(group):
+    # Возвращает список студентов группы group
     args = [group[0], group[1], group[2] + group[3]]
     req = "SELECT * FROM students WHERE " \
           "fac LIKE ? " \
@@ -72,6 +77,7 @@ def get_group_list(group):
 
 
 def count():
+    # Возвращает количество строк в БД
     req = "SELECT COUNT(*) FROM students"
     cursor.execute(req)
     answer = cursor.fetchall()

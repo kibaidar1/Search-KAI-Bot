@@ -12,7 +12,9 @@ logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s
                     level=logging.INFO)
 logger = logging.getLogger(__name__)
 
-COURSE, FAC, GROUP, ANSWER = range(4)
+COURSE, FAC, GROUP, ANSWER = range(4)  # Состояния дял ConversationHandler
+
+#  списки для команды LISTS
 group = [0, 0, 0, 0]
 faculties = ['1 - Институт авиации, наземного транспорта и энергетики',
              '2 - Факультет физико-математический',
@@ -27,36 +29,27 @@ chat_id = ''
 def create_db():
     # Создание БД
     print('Создаётся База данных')
-    par_stud = Parser_Students.find_student()
-    Manager_Database.add_to_db(par_stud)
+    par_stud = Parser_Students.find_student()  # Список студентов полученных парсингом
+    Manager_Database.add_to_db(par_stud)  # Добавления списка в БД
     print('База данных создана')
 
 
 def update_db(context):
     print('Начинается обновление базы данных')
-    par_stud = Parser_Students.find_student()
-    Manager_Database.update_db(par_stud)
+    par_stud = Parser_Students.find_student()  # Список студентов полученных парсингом
+    Manager_Database.update_db(par_stud)  # Обновление БД
     print("База данных обновлена")
 
 
 def start_comm(update, context):
+    # Команда START
     print("start")
-    # create_db()
     context.bot.send_chat_action(chat_id=update.message.chat_id, action=ChatAction.TYPING)
-    context.bot.send_message(chat_id=update.message.chat_id, text='Привет, пообщаемся?')
-    print(update.message.chat_id)
-    global chat_id
-    chat_id = update.message.chat_id
-
-
-def test_comm(update, context):
-    context.bot.send_message(chat_id=update.message.chat_id, text='Напиши что-нибудь')
-    print(update.message.chat_id)
-    global chat_id
-    chat_id = update.message.chat_id
+    context.bot.send_message(chat_id=update.message.chat_id, text='Привет, пообщаемся или найдём кого-нибудь?')
 
 
 def help_comm(update, context):
+    # Команда HELP
     print('help')
     context.bot.send_chat_action(chat_id=update.message.chat_id, action=ChatAction.TYPING)
     update.message.reply_text('Пообщайся со мной или можешь попробовать найти кого-нибудь из '
@@ -65,17 +58,22 @@ def help_comm(update, context):
 
 
 def error(update, context):
+    # Вывод логи
     logger.warning('Update "%s" caused error "%s"', update, context.error)
 
 
 def finder(arg):
+    # Поиск в БД
     print('finder')
+
+    # Поиск по имени
     if arg.isalpha():
+        # Размер имень не должен превышать 6-ти слов
         if len(arg.split()) <= 6:
-            students_lst = Manager_Database.get_student(name=arg.lower())
-            answer_lst = []
+            students_lst = Manager_Database.get_student(name=arg.lower())  # Список найденых студентов
+            answer_lst = []  # Список для ответа
             for i in students_lst:
-                answer_lst += [''.join(i[0:3]) + ' ' + i[3].title()]
+                answer_lst += [''.join(i[0:3]) + ' ' + i[3].title()]  # Формирование списка ответа
             if answer_lst:
                 return answer_lst
             else:
@@ -84,6 +82,7 @@ def finder(arg):
         else:
             return 'Кажется, неверный формат имени - слишком много слов.\nПопробуй ещё раз;)'
 
+    # Поиск по номеру группы
     elif arg.isdigit():
         if len(list(arg)) == 4:
             students_lst = Manager_Database.get_group_list(group=arg)
@@ -106,7 +105,7 @@ def finder(arg):
 
 def fac_comm(update, context):
     print('fac')
-    keyboard = [[fac] for fac in faculties]
+    keyboard = [[fac] for fac in faculties]  # Кавиатура
     reply_markup = ReplyKeyboardMarkup(keyboard, one_time_keyboard=True)
     context.bot.send_chat_action(chat_id=update.message.chat_id, action=ChatAction.TYPING)
     context.bot.send_message(chat_id=update.message.chat_id, text='\n'.join(sum(keyboard, [])))
@@ -114,7 +113,7 @@ def fac_comm(update, context):
     context.bot.send_message(chat_id=update.message.chat_id,
                              text='Это список факультетов КАИ, выбери какой-нибудь, '
                                   'чтобы посмотреть список курсов и групп в этом факультете.'
-                                  '\nИли используй команду "/cancel" для отмены.',
+                                  '\nИли тыкай в "/cancel" для отмены.',
                              reply_markup=reply_markup)
     return COURSE
 
@@ -122,12 +121,14 @@ def fac_comm(update, context):
 def course_comm(update, context):
     print('course')
     message = update.message.text
+
+    # Если сообщение есть в списке faculties
     if message in faculties:
-        group[0] = message[0]
-        answer = sorted(set(Manager_Database.get_courses(group[0])))
-        keyboard = [i[0] for i in answer]
+        group[0] = message[0]  # Изменение номера факультета на переданное собщение
+        answer = sorted(set(Manager_Database.get_courses(group[0])))  # Найденные номера курсов факультета
+        keyboard = [i[0] for i in answer]  # Клвиатура
         global courses
-        courses = keyboard
+        courses = keyboard  # Изменение списка курсов
         reply_markup = ReplyKeyboardMarkup(keyboard, one_time_keyboard=True)
         context.bot.send_chat_action(chat_id=update.message.chat_id, action=ChatAction.TYPING)
         context.bot.send_message(chat_id=update.message.chat_id, text='\n'.join(keyboard))
@@ -145,10 +146,12 @@ def course_comm(update, context):
 
 def group_comm(update, context):
     print('group')
+    # Если сообщение есть в списке courses
     if update.message.text in courses:
-        group[1] = update.message.text
-        answer = sorted(set(Manager_Database.get_groups(group[0], group[1])))
-        keyboard = [[''.join([group[0] + group[1] + i[0]])] for i in answer]
+        group[1] = update.message.text  # Изменение номера курса
+        answer = sorted(
+            set(Manager_Database.get_groups(group[0], group[1])))  # Списки групп факультета group[0] и курса group[1]
+        keyboard = [[''.join([group[0] + group[1] + i[0]])] for i in answer]  # Клавиатура
         reply_markup = ReplyKeyboardMarkup(keyboard, one_time_keyboard=True)
         context.bot.send_chat_action(chat_id=update.message.chat_id, action=ChatAction.TYPING)
         context.bot.send_message(chat_id=update.message.chat_id, text='\n'.join(sum(keyboard, [])))
@@ -158,8 +161,7 @@ def group_comm(update, context):
                                       '\nИли используй отмену - "/cancel"',
                                  reply_markup=reply_markup)
         return ANSWER
-    elif update.message.text == 'Назад':
-        return COURSE
+
     else:
         context.bot.send_chat_action(chat_id=update.message.chat_id, action=ChatAction.TYPING)
         context.bot.send_message(chat_id=update.message.chat_id, text='Выбери что-нибудь из списка')
@@ -167,45 +169,54 @@ def group_comm(update, context):
 
 
 def find_comm(update, context):
+    # Команда ПОИСК
     print('find')
     context.bot.send_chat_action(chat_id=update.message.chat_id, action=ChatAction.TYPING)
     update.message.reply_text('Напиши ФИО полностью или просто имя человека которого хочешь найти в КАИ. '
-                              'Или, если хочешь получить список группы, напиши её номер.')
+                              'Или, если хочешь получить список группы, напиши её номер.'
+                              '\nДля отмены ткни в /cancel')
     return ANSWER
 
 
 def answer_comm(update, context):
     print('answer')
-    answer_lst = finder(update.message.text)
-    if isinstance(answer_lst, list):
+    answer = finder(update.message.text)  # Ответ от поиска
+
+    # Если ответ является списком (список студентов)
+    if isinstance(answer, list):
+        # Длина сообщения имеет максимум в 4096 символов, поэтом ограничим сообщение в 100 строк
         max_text = 100  # Максимальное количество строк имён в одном сообщении
-        if len(answer_lst) > max_text:
-            range_arg = int(len(answer_lst) / max_text)
-            for j in range(range_arg):
-                print('\n'.join(answer_lst[max_text * j:max_text * (j + 1)]))
+        if len(answer) > max_text:
+            range_answer = int(len(answer) / max_text)  # Количество целых сообщений
+            for j in range(range_answer):
+                print('\n'.join(answer[max_text * j:max_text * (j + 1)]))
                 context.bot.send_chat_action(chat_id=update.message.chat_id, action=ChatAction.TYPING)
                 context.bot.send_message(chat_id=update.message.chat.id,
-                                         text='\n'.join(answer_lst[max_text * j:max_text * (j + 1)]),
+                                         text='\n'.join(answer[max_text * j:max_text * (j + 1)]),
                                          reply_markup=ReplyKeyboardRemove())
-                if (j + 2) > int(len(answer_lst) / max_text):
-                    print('\n'.join(answer_lst[max_text * (j + 1):]))
+
+                # Остаточное сообщение, если есть остаток
+                if (j + 2) > int(len(answer) / max_text):
+                    print('\n'.join(answer[max_text * (j + 1):]))
                     context.bot.send_chat_action(chat_id=update.message.chat_id, action=ChatAction.TYPING)
                     context.bot.send_message(chat_id=update.message.chat.id,
-                                             text='\n'.join(answer_lst[max_text * (j + 1):]))
+                                             text='\n'.join(answer[max_text * (j + 1):]))
         else:
             context.bot.send_chat_action(chat_id=update.message.chat_id, action=ChatAction.TYPING)
             context.bot.send_message(chat_id=update.message.chat.id,
-                                     text='\n'.join(answer_lst),
+                                     text='\n'.join(answer),
                                      reply_markup=ReplyKeyboardRemove())
         return ConversationHandler.END
 
-    elif isinstance(answer_lst, str):
+    # Если ответ является строкой (отрицательный ответ)
+    elif isinstance(answer, str):
         context.bot.send_chat_action(chat_id=update.message.chat_id, action=ChatAction.TYPING)
-        context.bot.send_message(chat_id=update.message.chat.id, text=answer_lst)
+        context.bot.send_message(chat_id=update.message.chat.id, text=answer)
         return ANSWER
 
 
 def cancel(update, context):
+    # Команда CANCEL
     print('cancel')
     context.bot.send_chat_action(chat_id=update.message.chat_id, action=ChatAction.TYPING)
     context.bot.send_message(chat_id=update.message.chat_id, text='Поиск отменён', reply_markup=ReplyKeyboardRemove())
@@ -213,6 +224,7 @@ def cancel(update, context):
 
 
 def text_message(update, context):
+    # Ответ на обычные сообщения
     request = apiai.ApiAI('ff6294d116844a5d8921d9c29b508dce').text_request()  # Токен API Dialogflow
     request.lang = 'ru'  # Язык запроса
     request.session_id = 'Botegram'  # ID Сессии диалога
@@ -255,12 +267,12 @@ def main():
     dispatcher.add_handler(CommandHandler('help', help_comm))
     dispatcher.add_error_handler(error)
 
-    # Работы
-    job.run_daily(update_db, days=(4,), time=datetime.time(14, 50), name='Updater DB')
+    # Работа по обновлению БД, каждый понеденльник в 3:00 ночи.
+    job.run_daily(update_db, days=(0,), time=datetime.time(3), name='Updater DB')
 
-    # Начинаем поиск обновлений
+    # Начало поиска обновлений
     updater.start_polling(clean=True)
-    # Останавливаем бота, если были нажаты Ctrl + C
+    # Останавка бота, если были нажаты Ctrl + C
     updater.idle()
 
 
