@@ -35,7 +35,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Manager_Database.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="748">
+            <state relative-caret-position="1003">
               <caret line="59" column="17" selection-start-line="59" selection-start-column="17" selection-end-line="59" selection-end-column="17" />
             </state>
           </provider>
@@ -44,23 +44,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Bot.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="136">
-              <caret line="14" column="44" selection-start-line="14" selection-start-column="36" selection-end-line="14" selection-end-column="44" />
-              <folding>
-                <element signature="e#1#74#0" expanded="true" />
-                <element signature="e#1033#1268#0" />
-                <element signature="e#1299#1521#0" />
-                <element signature="e#1561#1798#0" />
-                <element signature="e#1837#2223#0" />
-                <element signature="e#2258#2345#0" />
-                <element signature="e#2369#3933#0" />
-                <element signature="e#3971#4689#0" />
-                <element signature="e#4730#6013#0" />
-                <element signature="e#6053#7286#0" />
-                <element signature="e#7325#7725#0" />
-                <element signature="e#7766#9789#0" />
-                <element signature="e#9825#10106#0" />
-              </folding>
+            <state relative-caret-position="102">
+              <caret line="9" column="21" lean-forward="true" selection-start-line="9" selection-start-column="21" selection-end-line="9" selection-end-column="21" />
             </state>
           </provider>
         </entry>
@@ -359,7 +344,8 @@
       <workItem from="1560091122581" duration="3694000" />
       <workItem from="1560109139557" duration="15667000" />
       <workItem from="1560339505668" duration="1627000" />
-      <workItem from="1560344185128" duration="1053000" />
+      <workItem from="1560344185128" duration="3803000" />
+      <workItem from="1560417921294" duration="2200000" />
     </task>
     <task id="LOCAL-00001" summary="Final update">
       <created>1560340083861</created>
@@ -368,11 +354,25 @@
       <option name="project" value="LOCAL" />
       <updated>1560340083861</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="Final update">
+      <created>1560345306033</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1560345306033</updated>
+    </task>
+    <task id="LOCAL-00003" summary="Final update">
+      <created>1560345904642</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1560345904643</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="307618000" />
+    <option name="totallyTimeSpent" value="312568000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -387,7 +387,7 @@
     <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.42208776" />
+      <window_info content_ui="combo" id="Project" order="0" weight="0.42889562" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -398,11 +398,11 @@
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" sideWeight="0.49848714" weight="0.32405892" />
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Event Log" order="8" sideWeight="0.5128593" side_tool="true" visible="true" weight="0.32569557" />
+      <window_info anchor="bottom" id="Event Log" order="8" sideWeight="0.51437217" side_tool="true" visible="true" weight="0.32569557" />
       <window_info anchor="bottom" id="Terminal" order="9" show_stripe_button="false" weight="0.32890365" />
       <window_info anchor="bottom" id="Database Changes" order="10" show_stripe_button="false" weight="0.32890365" />
       <window_info anchor="bottom" id="Concurrent Activities Diagram" order="11" show_stripe_button="false" weight="0.32890365" />
-      <window_info anchor="bottom" id="Version Control" order="12" sideWeight="0.4871407" visible="true" weight="0.32569557" />
+      <window_info anchor="bottom" id="Version Control" order="12" sideWeight="0.48562783" visible="true" weight="0.32569557" />
       <window_info anchor="bottom" id="Python Console" order="13" sideWeight="0.4871407" weight="0.32569557" />
       <window_info anchor="bottom" id="Messages" order="14" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
@@ -583,6 +583,13 @@
     <entry file="file://$PROJECT_DIR$/.idea/workspace.xml">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
+    <entry file="file://$PROJECT_DIR$/Manager_Database.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1003">
+          <caret line="59" column="17" selection-start-line="59" selection-start-column="17" selection-end-line="59" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/Parser_Students.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1003">
@@ -600,32 +607,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Manager_Database.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="748">
-          <caret line="59" column="17" selection-start-line="59" selection-start-column="17" selection-end-line="59" selection-end-column="17" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Bot.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="136">
-          <caret line="14" column="44" selection-start-line="14" selection-start-column="36" selection-end-line="14" selection-end-column="44" />
-          <folding>
-            <element signature="e#1#74#0" expanded="true" />
-            <element signature="e#1033#1268#0" />
-            <element signature="e#1299#1521#0" />
-            <element signature="e#1561#1798#0" />
-            <element signature="e#1837#2223#0" />
-            <element signature="e#2258#2345#0" />
-            <element signature="e#2369#3933#0" />
-            <element signature="e#3971#4689#0" />
-            <element signature="e#4730#6013#0" />
-            <element signature="e#6053#7286#0" />
-            <element signature="e#7325#7725#0" />
-            <element signature="e#7766#9789#0" />
-            <element signature="e#9825#10106#0" />
-          </folding>
+        <state relative-caret-position="102">
+          <caret line="9" column="21" lean-forward="true" selection-start-line="9" selection-start-column="21" selection-end-line="9" selection-end-column="21" />
         </state>
       </provider>
     </entry>

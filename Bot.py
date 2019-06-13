@@ -11,8 +11,8 @@ import Manager_Database
 import Parser_Students
 
 # Ключи
-bot_token = S3Connection(os.environ['BOT_TOKEN'])
-ai_token = S3Connection(os.environ['AI_TOKEN'])
+bot_token = os.environ['BOT_TOKEN']
+ai_token = os.environ['AI_TOKEN']
 
 # Настройка логи
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
