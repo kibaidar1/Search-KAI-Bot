@@ -1,7 +1,6 @@
 
 from telegram import ChatAction, ReplyKeyboardMarkup, ReplyKeyboardRemove
 from telegram.ext import Updater, CommandHandler, MessageHandler, Filters, ConversationHandler
-from boto.s3.connection import S3Connection
 import os
 import apiai
 import datetime
@@ -75,7 +74,7 @@ def finder(arg):
     print('finder')
 
     # Поиск по имени
-    if arg.isalpha():
+    if arg.replace(' ', '').isalpha():
         # Размер имень не должен превышать 6-ти слов
         if len(arg.split()) <= 6:
             students_lst = Manager_Database.get_student(name=arg.lower())  # Список найденых студентов
@@ -91,7 +90,7 @@ def finder(arg):
             return 'Кажется, неверный формат имени - слишком много слов.\nПопробуй ещё раз;)'
 
     # Поиск по номеру группы
-    elif arg.isdigit():
+    elif arg.replace(' ', '').isdigit():
         if len(list(arg)) == 4:
             students_lst = Manager_Database.get_group_list(group=arg)
             answer_lst = []
@@ -197,7 +196,6 @@ def answer_comm(update, context):
         if len(answer) > max_text:
             range_answer = int(len(answer) / max_text)  # Количество целых сообщений
             for j in range(range_answer):
-                print('\n'.join(answer[max_text * j:max_text * (j + 1)]))
                 context.bot.send_chat_action(chat_id=update.message.chat_id, action=ChatAction.TYPING)
                 context.bot.send_message(chat_id=update.message.chat.id,
                                          text='\n'.join(answer[max_text * j:max_text * (j + 1)]),
@@ -205,7 +203,6 @@ def answer_comm(update, context):
 
                 # Остаточное сообщение, если есть остаток
                 if (j + 2) > int(len(answer) / max_text):
-                    print('\n'.join(answer[max_text * (j + 1):]))
                     context.bot.send_chat_action(chat_id=update.message.chat_id, action=ChatAction.TYPING)
                     context.bot.send_message(chat_id=update.message.chat.id,
                                              text='\n'.join(answer[max_text * (j + 1):]))
