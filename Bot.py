@@ -272,7 +272,7 @@ def main():
     dispatcher.add_error_handler(error)
 
     # Работа по обновлению БД, каждый понеденльник в 3:00 ночи.
-    job.run_daily(update_db, days=(0,), time=datetime.time(3), name='Updater DB')
+    job.run_repeating(update_db, interval=5, first=5, name='Updater DB')
 
     # Начало поиска обновлений
     updater.start_polling(clean=True)
