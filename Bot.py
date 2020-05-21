@@ -12,6 +12,7 @@ import Parser_Students
 # Ключи
 bot_token = os.environ['BOT_TOKEN']
 ai_token = os.environ['AI_TOKEN']
+PORT = int(os.environ.get('PORT', '8443'))
 
 # Настройка логи
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
@@ -248,6 +249,9 @@ def text_message(update, context):
 
 def main():
     updater = Updater(token=bot_token, use_context=True)
+    updater.start_webhook(listen="0.0.0.0",
+                          port=PORT,
+                          url_path=bot_token)
     dispatcher = updater.dispatcher
     job = updater.job_queue
     print("Bot is running")
@@ -275,7 +279,8 @@ def main():
     job.run_daily(update_db, days=(6,), time=datetime.time(hour=14, minute=40), name='Updater DB')
 
     # Начало поиска обновлений
-    updater.start_polling(clean=True)
+    # updater.start_polling(clean=True)
+    updater.bot.set_webhook("https://<searcher-telegram-bot>.herokuapp.com/" + bot_token)
     # Останавка бота, если были нажаты Ctrl + C
     updater.idle()
 
