@@ -280,7 +280,7 @@ def main():
 
     # Начало поиска обновлений
     # updater.start_polling(clean=True)
-    updater.bot.set_webhook("https://<searcher-telegram-bot>.herokuapp.com/" + bot_token)
+    updater.bot.set_webhook("https://searcher-telegram-bot.herokuapp.com/" + bot_token)
     # Останавка бота, если были нажаты Ctrl + C
     updater.idle()
 
