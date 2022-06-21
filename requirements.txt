@@ -9,7 +9,7 @@ cryptography==2.6.1
 future==0.17.1
 get==2019.3.22
 idna==2.8
-numpy==1.16.2
+numpy==1.22.0
 post==2019.3.22
 public==2019.3.22
 pycparser==2.19
